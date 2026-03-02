@@ -14,6 +14,8 @@
     "@aws-sdk/s3-request-presigner": "^3.1000.0",
     "@base-ui/react": "^1.2.0",
     "@clerk/nextjs": "^6.39.0",
+    "@dicebear/collection": "^9.3.2",
+    "@dicebear/core": "^9.3.2",
     "@hookform/resolvers": "^5.2.2",
     "@prisma/adapter-pg": "^7.4.2",
     "@prisma/client": "^7.4.2",
@@ -46,6 +48,7 @@
     "server-only": "^0.0.1",
     "simplex-noise": "^4.0.3",
     "sonner": "^2.0.7",
+    "superjson": "^2.2.6",
     "tailwind-merge": "^3.5.0",
     "vaul": "^1.1.2",
     "zod": "^4.3.6"
