@@ -1,4 +1,5 @@
 import { currentUser } from "@clerk/nextjs/server";
+import { randomUUID } from "crypto";
 import { createUploadthing, type FileRouter } from "uploadthing/next";
 import { UploadThingError } from "uploadthing/server";
 import { UTApi } from "uploadthing/server";
@@ -30,16 +31,41 @@ export const ourFileRouter = {
 export type OurFileRouter = typeof ourFileRouter;
 
 export async function deleteUploadThingFile(
-  keys: string | string[]
+    keys: string | string[]
 ) {
-  if (!keys || (Array.isArray(keys) && keys.length === 0)) {
-    throw new Error("Missing file key(s)");
-  }
+    if (!keys || (Array.isArray(keys) && keys.length === 0)) {
+        throw new Error("Missing file key(s)");
+    }
 
-  // Normalize to array
-  const fileKeys = Array.isArray(keys) ? keys : [keys];
+    // Normalize to array
+    const fileKeys = Array.isArray(keys) ? keys : [keys];
 
-  await utapi.deleteFiles(fileKeys);
+    await utapi.deleteFiles(fileKeys);
 
-  return { success: true };
+    return { success: true };
+}
+
+export async function uploadUploadThingFile(file: Buffer) {
+    if (!file) {
+        throw new Error("Missing file buffer");
+    }
+
+    // Convert Buffer -> Blob
+    const blob = new Blob([new Uint8Array(file)], { type: "audio/wav" });
+
+    const fileName = `audio-${randomUUID()}.wav`;
+
+    const audioFile = new File([blob], fileName, {
+        type: "audio/wav",
+    });
+    const uploadedFile = await utapi.uploadFiles([audioFile]);
+
+    if (!uploadedFile[0]?.data?.key) {
+        throw new Error("Upload failed");
+    }
+
+    return {
+        success: true,
+        key: uploadedFile[0].data.key,
+    };
 }
