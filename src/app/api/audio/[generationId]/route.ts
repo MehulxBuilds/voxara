@@ -6,7 +6,7 @@ const utapi = new UTApi();
 
 export async function GET(
     _request: Request,
-    { params }: { params: { generationId: string } },
+    { params }: { params: Promise<{ generationId: string }> },
 ) {
     const { userId, orgId } = await auth();
 
@@ -14,7 +14,7 @@ export async function GET(
         return new Response("Unauthorized", { status: 401 });
     }
 
-    const { generationId } = params;
+    const { generationId } = await params;
 
     const generation = await prisma.generation.findUnique({
         where: { id: generationId, orgId },
