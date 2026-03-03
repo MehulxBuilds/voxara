@@ -4,7 +4,7 @@ import { chatterbox } from "@/lib/chatterbox-client";
 import { prisma } from "@/lib/db";
 import { TEXT_MAX_LENGTH } from "@/features/text-to-speech/data/constants";
 import { createTRPCRouter, orgProcedure } from "../init";
-import { uploadUploadThingsVoiceFile } from "@/utils/uploadThings-utils";
+import { uploadAudiofile } from "@/utils/uploadThings-server-functions";
 
 export const generationsRouter = createTRPCRouter({
     getById: orgProcedure
@@ -132,7 +132,7 @@ export const generationsRouter = createTRPCRouter({
 
                 generationId = generation.id;
 
-                const response = await uploadUploadThingsVoiceFile(buffer);
+                const response = await uploadAudiofile(buffer);
                 r2ObjectKey = response?.key || "";
 
                 await prisma.generation.update({
