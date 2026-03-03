@@ -2,7 +2,7 @@ import { z } from "zod";
 import { TRPCError } from "@trpc/server";
 import { prisma } from "@/lib/db";
 import { createTRPCRouter, orgProcedure } from "../init";
-import { deleteUploadThingsVoiceFile } from "@/utils/uploadThings-utils";
+import { deleteAudioFile } from "@/utils/uploadThings-server-functions";
 
 export const voicesRouter = createTRPCRouter({
     getAll: orgProcedure
@@ -92,7 +92,7 @@ export const voicesRouter = createTRPCRouter({
 
             if (voice.r2ObjectKey) {
                 // In production, consider background jobs, retires, cron jobs etc.
-                await deleteUploadThingsVoiceFile(voice.r2ObjectKey).catch(() => { });
+                await deleteAudioFile(voice.r2ObjectKey).catch(() => { });
             }
 
             return { success: true };

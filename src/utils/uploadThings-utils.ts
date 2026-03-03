@@ -3,7 +3,7 @@ export const deleteUploadThingsVoiceFile = async (
 ) => {
     const keys = Array.isArray(key) ? key : [key];
 
-    const response = await fetch("/api/uploadthing/delete", {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/uploadthing/delete`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -30,7 +30,7 @@ export const uploadUploadThingsVoiceFile = async (
         }
     }
 
-    const response = await fetch("/api/uploadthing/upload", {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/uploadthing/upload`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
