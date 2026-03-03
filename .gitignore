@@ -46,3 +46,5 @@ next-env.d.ts
 __pycache__
 
 output.wav
+# Sentry Config File
+.env.sentry-build-plugin
