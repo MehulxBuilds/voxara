@@ -126,7 +126,7 @@ export function DashboardSidebar() {
         },
         {
             title: "Help and support",
-            url: "mailto:business@codewithantonio.com",
+            url: "mailto:mehulprajapati7456e@gmail.com",
             icon: Headphones,
         },
     ];

@@ -25,13 +25,13 @@ export function PageHeader({
             </div>
             <div className="flex items-center gap-3">
                 <Button variant="outline" size="sm" asChild>
-                    <Link href="mailto:business@codewithantonio.com">
+                    <Link href="mailto:mehulprajapati7456e@gmail.com">
                         <ThumbsUp />
                         <span className="hidden lg:block">Feedback</span>
                     </Link>
                 </Button>
                 <Button variant="outline" size="sm" asChild>
-                    <Link href="mailto:business@codewithantonio.com">
+                    <Link href="mailto:mehulprajapati7456e@gmail.com">
                         <Headphones />
                         <span className="hidden lg:block">Need help?</span>
                     </Link>
