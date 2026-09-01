@@ -10,12 +10,12 @@ export function DashboardHeader() {
     const { isLoaded, user } = useUser();
 
     return (
-        <div className="flex items-start justify-between">
+        <div className="flex items-start justify-between font-sans">
             <div className="space-y-1">
                 <p className="text-sm text-muted-foreground">
                     Nice to see you
                 </p>
-                <h1 className="text-2xl lg:text-3xl font-semibold tracking-tight">
+                <h1 className="text-2xl lg:text-3xl font-semibold tracking-[-0.8px] text-zinc-700">
                     {isLoaded ? (user?.fullName ?? user?.firstName ?? "there") : "..."}
                 </h1>
             </div>
