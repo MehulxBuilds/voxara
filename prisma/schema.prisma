@@ -26,6 +26,60 @@ enum VoiceCategory {
   CORPORATE
 }
 
+enum UserRole {
+  USER
+  ADMIN
+}
+
+enum OrganizationRole {
+  MEMBER
+  ADMIN
+}
+
+model Organization {
+  id String @id @default(cuid()) // for now we will be using clerkId as the id for the organization, but we may change this in the future
+
+  name String
+
+  voices      Voice[]
+  generations Generation[]
+  organizationUsers OrganizationUser[]
+
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
+}
+
+model OrganizationUser {
+  id String @id @default(cuid())
+
+  orgId  String
+  userId String
+
+  role OrganizationRole @default(MEMBER)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  organization Organization @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  user         User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([orgId, userId])
+}
+
+model User {
+  id String @id @default(cuid()) // for now we will be using clerkId as the id for the user, but we may change this in the future
+
+  role UserRole @default(USER)
+
+  email    String  @unique
+  password String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  organizationUsers OrganizationUser[]
+}
+
 model Voice {
   id String @id @default(cuid())
 
@@ -40,8 +94,10 @@ model Voice {
 
   generations Generation[]
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+  organization   Organization? @relation(fields: [organizationId], references: [id])
+  organizationId String?
 
   @@index([variant])
   @@index([orgId])
@@ -63,8 +119,10 @@ model Generation {
   topK              Int
   repetitionPenalty Float
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+  organization   Organization? @relation(fields: [organizationId], references: [id])
+  organizationId String?
 
   @@index([orgId])
   @@index([voiceId])

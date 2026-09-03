@@ -5,6 +5,7 @@ export const env = createEnv({
   server: {
     DATABASE_URL: z.string().min(1),
     APP_URL: z.string().min(1),
+    CLERK_WEBHOOK_SIGNING_SECRET: z.string().min(1),
     // R2_ACCOUNT_ID: z.string().min(1),
     // R2_ACCESS_KEY_ID: z.string().min(1),
     // R2_SECRET_ACCESS_KEY: z.string().min(1),
