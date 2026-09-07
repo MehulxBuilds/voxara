@@ -23,7 +23,7 @@ export function VoiceAvatar({
 
     return (
         <Avatar
-            className={cn("size-4 border-white shadow-xs", className)}
+            className={cn("size-4 border-background shadow-xs", className)}
         >
             <AvatarImage src={avatarUrl} alt={name} />
             <AvatarFallback className="text-[8px]">

@@ -83,7 +83,7 @@ export function VoiceCard({ voice }: VoiceCardProps) {
                     <VoiceAvatar
                         seed={voice.id}
                         name={voice.name}
-                        className="size-14 border-[1.5px] border-white shadow-xs lg:size-18"
+                        className="size-14 border-[1.5px] border-background shadow-xs lg:size-18"
                     />
                 </div>
 
