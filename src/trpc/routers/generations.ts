@@ -14,7 +14,6 @@ export const generationsRouter = createTRPCRouter({
                 where: {
                     id: input.id,
                     orgId: ctx.orgId,
-                    generatedBy: ctx.userId,
                 },
                 omit: {
                     orgId: true,
@@ -36,7 +35,6 @@ export const generationsRouter = createTRPCRouter({
         const generations = await prisma.generation.findMany({
             where: {
                 orgId: ctx.orgId,
-                generatedBy: ctx.userId,
             },
             orderBy: { createdAt: "desc" },
             omit: {
@@ -68,7 +66,6 @@ export const generationsRouter = createTRPCRouter({
                         {
                             variant: "CUSTOM",
                             orgId: ctx.orgId,
-                            userId: ctx.userId,
                         }
                     ],
                 },

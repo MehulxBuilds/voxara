@@ -37,7 +37,6 @@ export const voicesRouter = createTRPCRouter({
                     where: {
                         variant: "CUSTOM",
                         orgId: ctx.orgId,
-                        userId: ctx.userId,
                         ...searchFilter,
                     },
                     orderBy: { createdAt: "desc" },
@@ -78,7 +77,6 @@ export const voicesRouter = createTRPCRouter({
                     id: input.id,
                     variant: "CUSTOM",
                     orgId: ctx.orgId,
-                    userId: ctx.userId,
                 },
                 select: { id: true, r2ObjectKey: true },
             });
