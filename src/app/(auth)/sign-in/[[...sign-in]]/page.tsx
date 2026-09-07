@@ -1,16 +1,14 @@
 import { SignIn } from "@clerk/nextjs";
 
+import { AuthShell } from "@/components/auth/auth-shell";
+
 export default function SignInPage() {
     return (
-        <div className="flex min-h-screen items-center justify-center bg-background">
+        <AuthShell headline="Turn your words into voices worth hearing.">
             <SignIn
-                appearance={{
-                    elements: {
-                        rootBox: "mx-auto",
-                        card: "shadow-lg",
-                    },
-                }}
+                signUpUrl="/sign-up"
+                forceRedirectUrl="/"
             />
-        </div>
+        </AuthShell>
     );
 }
