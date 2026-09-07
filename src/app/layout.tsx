@@ -5,6 +5,7 @@ import { ClerkProvider } from '@clerk/nextjs'
 import { TRPCReactProvider } from "@/trpc/client";
 import { Toaster } from "@/components/ui/sonner";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
+import { dark } from '@clerk/ui/themes'
 
 const inter = Inter({
   variable: "--font-inter",
@@ -31,7 +32,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <ClerkProvider>
+      <ClerkProvider
+        appearance={{
+          theme: dark,
+        }}
+      >
         <TRPCReactProvider>
           <body
             className={`${inter.variable} ${geistMono.variable} antialiased`}
