@@ -21,6 +21,7 @@ export async function GET(
         select: {
             variant: true,
             orgId: true,
+            userId: true,
             r2ObjectKey: true,
         },
     });
@@ -29,7 +30,10 @@ export async function GET(
         return new Response("Not found", { status: 404 });
     }
 
-    if (voice.variant === "CUSTOM" && voice.orgId !== orgId) {
+    if (
+        voice.variant === "CUSTOM" &&
+        (voice.orgId !== orgId || voice.userId !== userId)
+    ) {
         return new Response("Not found", { status: 404 });
     }
 

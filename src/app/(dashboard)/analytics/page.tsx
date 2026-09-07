@@ -3,7 +3,8 @@ import React from 'react'
 
 const Analytics = () => {
   return (
-    <div>Analytics</div>
+    <div className='flex items-center
+     justify-center min-h-screen font-sans text-[20px] font-medium tracking-[-0.8px]'>Analytics Comming Soon! ❤️</div>
   )
 }
 

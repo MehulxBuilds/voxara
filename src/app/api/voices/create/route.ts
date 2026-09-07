@@ -5,11 +5,7 @@ import { prisma } from "@/lib/db";
 import { VOICE_CATEGORIES } from "@/features/voices/data/voice-categories";
 import type { VoiceCategory } from "@prisma/client";
 import { Buffer } from "node:buffer";
-import { randomUUID } from "node:crypto";
-import { UTApi } from "uploadthing/server";
 import { uploadAudiofile } from "@/utils/uploadThings-server-functions";
-
-const utapi = new UTApi();
 
 const createVoiceSchema = z.object({
     name: z.string().min(1, "Voice name is required"),
@@ -104,14 +100,13 @@ export async function POST(request: Request) {
 
     let createdVoiceId: string | null = null;
 
-    console.log(10)
-
     try {
         const voice = await prisma.voice.create({
             data: {
                 name,
                 variant: "CUSTOM",
                 orgId,
+                userId,
                 description,
                 category,
                 language,

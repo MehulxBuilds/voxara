@@ -17,7 +17,11 @@ export async function GET(
     const { generationId } = await params;
 
     const generation = await prisma.generation.findUnique({
-        where: { id: generationId, orgId },
+        where: {
+            id: generationId,
+            orgId,
+            generatedBy: userId,
+        },
     });
 
     if (!generation) {

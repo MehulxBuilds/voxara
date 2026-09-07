@@ -41,12 +41,12 @@ model Organization {
 
   name String
 
-  voices      Voice[]
-  generations Generation[]
+  voices            Voice[]
+  generations       Generation[]
   organizationUsers OrganizationUser[]
 
-  createdAt         DateTime           @default(now())
-  updatedAt         DateTime           @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model OrganizationUser {
@@ -78,13 +78,15 @@ model User {
   updatedAt DateTime @updatedAt
 
   organizationUsers OrganizationUser[]
+  generations       Generation[]
+  voices            Voice[]
 }
 
 model Voice {
   id String @id @default(cuid())
 
-  orgId String?
-
+  orgId       String?
+  userId      String?
   name        String
   description String?
   category    VoiceCategory @default(GENERAL)
@@ -94,10 +96,11 @@ model Voice {
 
   generations Generation[]
 
-  createdAt      DateTime      @default(now())
-  updatedAt      DateTime      @updatedAt
-  organization   Organization? @relation(fields: [organizationId], references: [id])
-  organizationId String?
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  organization Organization? @relation(fields: [orgId], references: [id])
+
+  user User? @relation(fields: [userId], references: [id], onDelete: SetNull)
 
   @@index([variant])
   @@index([orgId])
@@ -106,7 +109,8 @@ model Voice {
 model Generation {
   id String @id @default(cuid())
 
-  orgId String
+  orgId       String
+  generatedBy String?
 
   voiceId String?
   voice   Voice?  @relation(fields: [voiceId], references: [id], onDelete: SetNull)
@@ -119,10 +123,11 @@ model Generation {
   topK              Int
   repetitionPenalty Float
 
-  createdAt      DateTime      @default(now())
-  updatedAt      DateTime      @updatedAt
-  organization   Organization? @relation(fields: [organizationId], references: [id])
-  organizationId String?
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  organization Organization? @relation(fields: [orgId], references: [id])
+
+  generatedByUser User? @relation(fields: [generatedBy], references: [id], onDelete: Cascade)
 
   @@index([orgId])
   @@index([voiceId])
