@@ -11,7 +11,11 @@ export const generationsRouter = createTRPCRouter({
         .input(z.object({ id: z.string() }))
         .query(async ({ input, ctx }) => {
             const generation = await prisma.generation.findUnique({
-                where: { id: input.id, orgId: ctx.orgId },
+                where: {
+                    id: input.id,
+                    orgId: ctx.orgId,
+                    generatedBy: ctx.userId,
+                },
                 omit: {
                     orgId: true,
                     r2ObjectKey: true,
@@ -30,7 +34,10 @@ export const generationsRouter = createTRPCRouter({
 
     getAll: orgProcedure.query(async ({ ctx }) => {
         const generations = await prisma.generation.findMany({
-            where: { orgId: ctx.orgId },
+            where: {
+                orgId: ctx.orgId,
+                generatedBy: ctx.userId,
+            },
             orderBy: { createdAt: "desc" },
             omit: {
                 orgId: true,
@@ -58,7 +65,11 @@ export const generationsRouter = createTRPCRouter({
                     id: input.voiceId,
                     OR: [
                         { variant: "SYSTEM" },
-                        { variant: "CUSTOM", orgId: ctx.orgId, }
+                        {
+                            variant: "CUSTOM",
+                            orgId: ctx.orgId,
+                            userId: ctx.userId,
+                        }
                     ],
                 },
                 select: {
@@ -117,6 +128,7 @@ export const generationsRouter = createTRPCRouter({
                 const generation = await prisma.generation.create({
                     data: {
                         orgId: ctx.orgId,
+                        generatedBy: ctx.userId,
                         text: input.text,
                         voiceName: voice.name,
                         voiceId: voice.id,

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { cn } from "@/lib/utils";
+import { ModeToggle } from "@/theme-toggle";
 
 export function PageHeader({
     title,
@@ -24,6 +25,7 @@ export function PageHeader({
                 <h1 className="text-lg font-semibold tracking-tight">{title}</h1>
             </div>
             <div className="flex items-center gap-3">
+                <ModeToggle />
                 <Button variant="outline" size="sm" asChild>
                     <Link href="mailto:mehulprajapati7456e@gmail.com">
                         <ThumbsUp />

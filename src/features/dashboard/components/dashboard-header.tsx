@@ -5,6 +5,7 @@ import { Headphones, ThumbsUp } from "lucide-react";
 import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
+import { ModeToggle } from "@/theme-toggle";
 
 export function DashboardHeader() {
     const { isLoaded, user } = useUser();
@@ -15,12 +16,13 @@ export function DashboardHeader() {
                 <p className="text-sm text-muted-foreground">
                     Nice to see you
                 </p>
-                <h1 className="text-2xl lg:text-3xl font-semibold tracking-[-0.8px] text-zinc-700">
+                <h1 className="text-2xl lg:text-3xl font-semibold tracking-[-0.8px] text-foreground">
                     {isLoaded ? (user?.fullName ?? user?.firstName ?? "there") : "..."}
                 </h1>
             </div>
 
             <div className="lg:flex items-center gap-3 hidden">
+                <ModeToggle />
                 <Button variant="outline" size="sm" asChild>
                     <Link href="mailto:mehulprajapati7456e@gmail.com">
                         <ThumbsUp />
