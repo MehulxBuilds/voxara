@@ -20,7 +20,6 @@ export async function GET(
         where: {
             id: generationId,
             orgId,
-            generatedBy: userId,
         },
     });
 
