@@ -317,7 +317,7 @@ model GuardRailsMessage {
 model Policies {
   id       String  @id @default(uuid())
   userId   String
-  type     String  @unique
+  type     String
   isAgreed Boolean
   title    String
   message  String
@@ -325,4 +325,6 @@ model Policies {
 
   createdAt DateTime @default(now()) @db.Timestamptz
   updatedAt DateTime @updatedAt @db.Timestamptz
+
+  @@unique([userId, type])
 }
