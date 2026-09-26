@@ -39,7 +39,12 @@ export const onboardingRouter = createTRPCRouter({
           isOnboarded: true,
           policies: {
             upsert: {
-              where: { type: onboardingPolicy.type },
+              where: {
+                userId_type: {
+                  userId: ctx.userId,
+                  type: onboardingPolicy.type,
+                },
+              },
               create: {
                 isAgreed: true,
                 ...onboardingPolicy,
