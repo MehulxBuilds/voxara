@@ -5,11 +5,19 @@ import { prisma } from "@/lib/db";
 import { TEXT_MAX_LENGTH } from "@/features/text-to-speech/data/constants";
 import { authProcedure, createTRPCRouter } from "../init";
 import { uploadAudiofile } from "@/utils/uploadThings-server-functions";
-import { userPromtCheckGuardRail } from "@/lib/guardrails";
-import {
-    hasUnsupportedControlCharacters,
-    normalizePrompt,
-} from "@/lib/prompt-validation";
+import { userPromptCheckGuardRail } from "@/lib/guardrails";
+
+const normalizePrompt = (text: string) => text.normalize("NFKC").trim();
+
+const hasUnsupportedControlCharacters = (text: string) =>
+    Array.from(text).some((character) => {
+        const codePoint = character.charCodeAt(0);
+        const isDisallowedC0 =
+            codePoint <= 31 && ![9, 10, 13].includes(codePoint);
+        const isC1 = codePoint >= 127 && codePoint <= 159;
+
+        return isDisallowedC0 || isC1;
+    });
 
 export const generationsRouter = createTRPCRouter({
     getCredits: authProcedure.query(async ({ ctx }) => {
@@ -138,7 +146,7 @@ export const generationsRouter = createTRPCRouter({
 
             // GuardRail Check
             try {
-                const guard = await userPromtCheckGuardRail(normalizedText);
+                const guard = await userPromptCheckGuardRail(normalizedText);
                 await prisma.guardRailsMessage.create({
                     data: {
                         userId: ctx.userId,
